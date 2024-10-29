@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import qouteall.imm_ptl.core.chunk_loading.ImmPtlChunkTracking;
 import qouteall.imm_ptl.core.chunk_loading.PlayerChunkLoading;
 import qouteall.imm_ptl.core.ducks.IEChunkMap;
+import qouteall.imm_ptl.core.ducks.IEServerPlayerEntity;
 
 @Mixin(value = ChunkMap.class, priority = 1100)
 public abstract class MixinChunkMap_C implements IEChunkMap {
@@ -54,7 +55,16 @@ public abstract class MixinChunkMap_C implements IEChunkMap {
     public ChunkHolder ip_getChunkHolder(long chunkPosLong) {
         return getVisibleChunkIfPresent(chunkPosLong);
     }
-    
+
+    /**
+     * @author daimond113
+     * @reason Maintain compatibility with APIs such as Fabric's PlayerLookup
+     */
+    @Overwrite
+    public boolean isChunkTracked(ServerPlayer player, int x, int z) {
+        return ((IEServerPlayerEntity) player).ip_getChunkTrackingView().contains(x, z);
+    }
+
     /**
      * packets will be sent on {@link PlayerChunkLoading}
      */
@@ -66,6 +76,7 @@ public abstract class MixinChunkMap_C implements IEChunkMap {
     private void onUpdateChunkTracking(
         ServerPlayer serverPlayer, ChunkTrackingView chunkTrackingView, CallbackInfo ci
     ) {
+        ((IEServerPlayerEntity) serverPlayer).ip_setChunkTrackingView(chunkTrackingView);
         ci.cancel();
     }
     

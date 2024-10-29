@@ -2,6 +2,7 @@ package qouteall.imm_ptl.core.mixin.common.entity_sync;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ChunkTrackingView;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
@@ -11,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import qouteall.imm_ptl.core.ducks.IEServerPlayerEntity;
 
 @Mixin(ServerPlayer.class)
@@ -22,6 +24,9 @@ public abstract class MixinServerPlayer extends Player implements IEServerPlayer
     
     @Shadow
     private boolean isChangingDimension;
+
+    @Unique
+    private ChunkTrackingView ip_chunkTrackingView;
     
     public MixinServerPlayer(Level level, BlockPos blockPos, float f, GameProfile gameProfile) {
         super(level, blockPos, f, gameProfile);
@@ -48,5 +53,15 @@ public abstract class MixinServerPlayer extends Player implements IEServerPlayer
             enteredNetherPosition = fromPos;
         }
         triggerDimensionChangeTriggers(fromWorld);
+    }
+
+    @Override
+    public void ip_setChunkTrackingView(ChunkTrackingView view) {
+        ip_chunkTrackingView = view;
+    }
+
+    @Override
+    public ChunkTrackingView ip_getChunkTrackingView() {
+        return ip_chunkTrackingView;
     }
 }
