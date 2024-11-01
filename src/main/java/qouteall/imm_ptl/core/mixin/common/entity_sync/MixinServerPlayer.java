@@ -22,7 +22,7 @@ public abstract class MixinServerPlayer extends Player implements IEServerPlayer
     
     @Shadow
     private boolean isChangingDimension;
-
+    
     public MixinServerPlayer(Level level, BlockPos blockPos, float f, GameProfile gameProfile) {
         super(level, blockPos, f, gameProfile);
     }
