@@ -1,6 +1,5 @@
 package qouteall.imm_ptl.core.ducks;
 
-import net.minecraft.server.level.ChunkTrackingView;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
