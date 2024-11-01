@@ -62,7 +62,12 @@ public abstract class MixinChunkMap_C implements IEChunkMap {
      */
     @Overwrite
     public boolean isChunkTracked(ServerPlayer player, int x, int z) {
-        return ((IEServerPlayerEntity) player).ip_getChunkTrackingView().contains(x, z);
+        return ImmPtlChunkTracking.isPlayerWatchingChunk(
+            player,
+            level.dimension(),
+            x,
+            z
+        );
     }
 
     /**
@@ -76,7 +81,6 @@ public abstract class MixinChunkMap_C implements IEChunkMap {
     private void onUpdateChunkTracking(
         ServerPlayer serverPlayer, ChunkTrackingView chunkTrackingView, CallbackInfo ci
     ) {
-        ((IEServerPlayerEntity) serverPlayer).ip_setChunkTrackingView(chunkTrackingView);
         ci.cancel();
     }
     

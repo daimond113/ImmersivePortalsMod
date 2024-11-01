@@ -54,14 +54,4 @@ public abstract class MixinServerPlayer extends Player implements IEServerPlayer
         }
         triggerDimensionChangeTriggers(fromWorld);
     }
-
-    @Override
-    public void ip_setChunkTrackingView(ChunkTrackingView view) {
-        ip_chunkTrackingView = view;
-    }
-
-    @Override
-    public ChunkTrackingView ip_getChunkTrackingView() {
-        return ip_chunkTrackingView;
-    }
 }

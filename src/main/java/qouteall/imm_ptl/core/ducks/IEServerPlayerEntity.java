@@ -12,8 +12,4 @@ public interface IEServerPlayerEntity {
     void ip_startRidingWithoutTeleportRequest(Entity newVehicle);
     
     void portal_worldChanged(ServerLevel fromWorld, Vec3 fromPos);
-
-    void ip_setChunkTrackingView(ChunkTrackingView view);
-
-    ChunkTrackingView ip_getChunkTrackingView();
 }
